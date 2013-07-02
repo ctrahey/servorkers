@@ -1,0 +1,16 @@
+<html>
+<head>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script src="components/angular/angular.js"></script>
+  <script src="scripts/main.js"></script>
+  <script src="scripts/services/servorkerManager.js"></script>
+  <script src="scripts/services/echoService.js"></script>
+  <script>
+    // registerThreadsafeService('echo', '/scripts/services/echoService.js');
+  </script>
+</head>
+<body ng-app="main">
+  <h1>Normal Service</h1>
+  <a href="/servorker.html">View Service - In - Worker</a>
+  <div ng-view></div>
+</html>
