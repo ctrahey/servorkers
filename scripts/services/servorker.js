@@ -10,7 +10,7 @@ var _fakeDoc = {
 var window = self;
 var document = _fakeDoc;
 window.document = document;
-importScripts('/components/angular/angular.js');
+importScripts('../../components/angular/angular.js');
 
 var workerServicesModule = angular.module("main", []);
 
@@ -21,7 +21,7 @@ self.addEventListener('message', function(event) {
   }
   switch(message["invocationType"]) {
     case "servorkerServiceCall":
-      importScripts(message.servicePath);
+      importScripts('../../' + message.servicePath);
       break;
     case "userInvocation":
     default:

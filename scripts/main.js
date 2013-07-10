@@ -1,4 +1,5 @@
-angular.module("main", []).config(function($routeProvider){
+var mainMod = angular.module("main", []);
+mainMod.config(function($routeProvider){
   $routeProvider.when('/',{
     templateUrl: 'views/main.html',
     controller: "hostController"
@@ -6,7 +7,12 @@ angular.module("main", []).config(function($routeProvider){
 });
 angular.module("main").controller("hostController", ['$scope', 'echo', function($scope, echo){
   $scope.userinput = "Hello";
+  $scope.loading = false;
   $scope.echo = function(){
-    $scope.foo = echo.callOut($scope.userinput);    
+    $scope.loading = true;
+    $scope.service_says = echo.callOut($scope.userinput);
+    $scope.service_says.then(function(){
+      $scope.loading = false;
+    });
   }
 }]);

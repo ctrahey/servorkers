@@ -1,16 +1,44 @@
 <html>
 <head>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-  <script src="components/angular/angular.js"></script>
-  <script src="scripts/main.js"></script>
-  <script src="scripts/services/servorkerManager.js"></script>
-  <script src="scripts/services/echoService.js"></script>
+  <link rel="stylesheet" href="./styles/main.css" />
   <script>
-    // registerThreadsafeService('echo', '/scripts/services/echoService.js');
+  if(undefined == window.Proxy) {
+    alert('So sorry! For now, Proxy API is a dependency. In Chrome this can be provided by enabling "expirimental javascript" in chrome://flags');
+  }
   </script>
 </head>
 <body ng-app="main">
-  <h1>Normal Service</h1>
-  <a href="/servorker.html">View Service - In - Worker</a>
-  <div ng-view></div>
+  <h1 class="main_cta">Click "Simulate Expensive Task" on each side and compare!</h1>
+  <section id="container">
+    <div id="traditional" class="examplecontext">
+      <h1>Traditional</h1>
+      <iframe src="normal.html"></iframe>
+    </div>
+    <div id="servorkers" class="examplecontext">
+      <h1>Servorker</h1>
+      <iframe src="servorker.html"></iframe>
+    </div>
+  </section>
+  <section class="about">
+  <h2>What's the difference in code?</h2>
+  <p>Basically, nothing. There is exactly one line difference between these two examples; only how the custom Service is loaded.</p>
+  <pre>
+    <span style="color:red;">-   &lt;script src=&quot;scripts/services/echoService.js&quot;&gt;&lt;/script&gt;</span>
+    <span style="color:green;">+   &lt;script&gt;</span>
+    <span style="color:green;">+     registerThreadsafeService(&#x27;echo&#x27;, &#x27;/scripts/services/echoService.js&#x27;);</span>
+    <span style="color:green;">+   &lt;/script&gt;</span>
+  </pre>
+  <h2>What's the difference then?</h2>
+  <p>The demo on the right loads the service in the context of a WebWorker and the Servorkers Library manages all coordination between the workers.</p>
+  <h4>About this demo</h4>
+  <p>The animated bars represent simulated main-thread work. Perhaps this is animation, touch handling, or DOM manipulation. Clicking the "Simulate..." button makes a call to a mock Angular service which simulates a block of code that takes a long time to complete. Imagine this is crunching through a data set or waiting on a synchronous network call.</p>
+  <p>Both service models use <strong>the same service and the same service-consuming code</strong> (they are literally the same ng-view template). The "Normal" service-mode simply injects the service in the caller's normal context (e.g. a &lt;script&gt; tag). The "Service in Worker" (Servorker) mode provides a proxy instead and the service itself is loaded into a completely distinct angular application context living on another thread (a Worker).
+  <h4>Instructions</h4>
+  <ol>
+    <li>Choose a service type to test</li>
+    <li>enter a string to be echoed back by simulated service</li>
+    <li>click Simulate...</li>
+    <li>observe impact on animation</li>
+  </ol>
+  </section>
 </html>

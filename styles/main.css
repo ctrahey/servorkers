@@ -1,0 +1,53 @@
+body {
+  font-family: sans-serif;
+}
+
+section.about {
+  background-color:#EEEEEE;
+  width:75%;
+  margin:auto;
+  border-radius:15px;
+  padding:15px;
+}
+.examplecontext {
+  position:absolute;
+  width:45%;
+  margin:0px;
+  height:250px;
+  background-color:#EEEEEE;
+  border-radius:15px;
+  
+}
+.examplecontext h1{
+  text-align: center;
+  color: white;
+  padding: 5px 10px;
+  margin: 0px;
+  
+}
+
+#traditional {
+  left:4%;
+}
+#traditional h1 {
+  background: grey;
+}
+
+#servorkers {
+  left:51%;
+}
+
+#servorkers h1 {
+  background:green;
+}
+#container {
+  height: 300px;
+}
+iframe {
+  width: 90%;
+  margin: auto;
+  display:block;
+  border:none;
+  height:250px;
+}
+

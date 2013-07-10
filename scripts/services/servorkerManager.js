@@ -36,7 +36,7 @@ remoteWorker.addEventListener('message', function(e) {
 }, false);
 
 
-function registerThreadsafeService(serviceName, path) {
+function registerServorker(serviceName, path) {
   remoteWorker.postMessage({
     invocationType:"servorkerServiceCall",
     invocationName:"registerService",

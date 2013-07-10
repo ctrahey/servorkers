@@ -1,30 +1,20 @@
 <div>
-  <p>Service Echo: <pre> {{foo}}</pre></p>
   <input ng-model="userinput">
-  <input type="button" ng-click="echo()" value="echo" />
+  <input type="button" ng-click="echo()" value="Simulate Expensive task" />
+  <img ng-show="loading" src="styles/loader.gif">
+  <p>Service Echoed: <pre> {{service_says}}</pre></p>
 </div>
-<div id="animated" style="width:100px; height:100px; background:blue;"></div>
+<div id="animated" style="width:100px; height:50px; background:blue; color:white; line-height:1em; width:100%;">Simulated UI Work</div>
 <script>
   var animatedObj = $('#animated');
   var oddIteration = true;
   function theAnimation() {
     oddIteration = !oddIteration;
-    var width = (oddIteration) ? 400:100;
+    var height = (oddIteration) ? "4em":"1em";
     animatedObj.animate({
-      width:width,
-    }, 1000);      
+      height:height,
+    }, 500);
   }
-  setInterval(theAnimation, 1000);
+  setInterval(theAnimation, 500);
   theAnimation();
 </script>
-
-
-<h4>About this demo</h4>
-<p>Both service models use the same service and the same service-consuming code. The "Normal" service mode simply injects the service in the caller's normal context. The "Service in Worker" mode provides a proxy instead. The service itself is loaded into a completely distinct angular application context living on another thread.
-<h4>Instructions</h4>
-<ol>
-  <li>browse to the desired service model</li>
-  <li>enter a string to be echoed back by simulated service</li>
-  <li>click echo</li>
-  <li>observe impact on animation</li>
-</ol>
