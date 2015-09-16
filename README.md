@@ -11,6 +11,12 @@ Angular services to do all their work in a WebWorker thread.
 1. No change needed in how Services are consumed if the service is already Promise-oriented.
 1. Only change how you 'load' the service
 
+##Video
+<a href="https://vimeo.com/133250679">
+	<img src="https://farm6.staticflickr.com/5674/21468335125_827ad8e8a5_h.jpg" width="300" />
+</a>
+
+
 ##Motivation
 I was working on a very large Angular project which was primarily a tablet interface, but which
 had large data sets and plenty of network-loaded assets for most interactions. We were working with
