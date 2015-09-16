@@ -43,33 +43,67 @@ function registerServorker(serviceName, path) {
     serviceName: serviceName,
     servicePath: path
   });
+  
+  
+  
+  
   angular.module('main').service(serviceName, function($q, $rootScope){
     var _servorkerManager = function() {
     }
     var _servorker = new _servorkerManager();
 
-    var _serviceProxy = {
-      get:function(proxied, name) {
-        return _servorker[name] || function(){
-          var prom = ServorkerManager.newPromise();
-          var invocationMessage = {
-            invocationType:"userInvocation",
-            invocationName:name,
-            invocationArgs: Array.prototype.slice.call(arguments),
-            serviceName: serviceName,
-            invocationToken: prom._srvrkrID,
-          };
-          remoteWorker.postMessage(invocationMessage, []);
-          var retpromise = prom.promise;
-          retpromise.then(function(data){
-            setTimeout(function(){$rootScope.$apply();},1);
-            return data;
-          })
-          return retpromise;
+    // var _serviceProxy = {
+    //       get:function(proxied, name) {
+    //         return _servorker[name] || function(){
+    //           var prom = ServorkerManager.newPromise();
+    //           var invocationMessage = {
+    //             invocationType:"userInvocation",
+    //             invocationName:name,
+    //             invocationArgs: Array.prototype.slice.call(arguments),
+    //             serviceName: serviceName,
+    //             invocationToken: prom._srvrkrID,
+    //           };
+    //           remoteWorker.postMessage(invocationMessage, []);
+    //           var retpromise = prom.promise;
+    //           retpromise.then(function(data){
+    //             setTimeout(function(){$rootScope.$apply();},1);
+    //             return data;
+    //           })
+    //           return retpromise;
+    //         }
+    //       }
+    //     }
+    
+    var servicePromise = $q.defer();
+    setTimeout(function(){
+      // var _prox = Proxy.create(_serviceProxy, Object.getPrototypeOf(_servorker));
+      $rootScope.$apply(function(){
+        var fakeObj = {
+          callOut:function() {
+            var prom = ServorkerManager.newPromise();
+            var invocationMessage = {
+              invocationType:"userInvocation",
+              invocationName:'callOut',
+              invocationArgs: Array.prototype.slice.call(arguments),
+              serviceName: serviceName,
+              invocationToken: prom._srvrkrID,
+            };
+            remoteWorker.postMessage(invocationMessage, []);
+            var retpromise = prom.promise;
+            retpromise.then(function(data){
+              setTimeout(function(){$rootScope.$apply();},1);
+              return data;
+            })
+            return retpromise;
+            
+          }
         }
-      }
-    }
-    var _prox = Proxy.create(_serviceProxy, Object.getPrototypeOf(_servorker));
-    return _prox;
-  })
+        console.log("resolving service, yo!");
+        servicePromise.resolve(fakeObj);        
+      });
+      // return _prox;      
+    }, 200);
+    return servicePromise.promise;
+    
+  });
 }
